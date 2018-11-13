@@ -5,15 +5,20 @@ public class MemberJudgeResponseDto {
   private String memberName;
   private boolean enlistedPropriety;
 
-  public void setString(String string) {
+  public void setmemberName(String string) {
     this.memberName = string;
   }
 
-  public String getString() {
+  public String getmemberName() {
     return memberName;
   }
 
   public void setenlistedPropriety(boolean propriety) {
     this.enlistedPropriety = propriety;
   }
+
+  public boolean getenlistedPropriety() {
+    return enlistedPropriety;
+  }
+
 }

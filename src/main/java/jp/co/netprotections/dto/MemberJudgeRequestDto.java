@@ -29,8 +29,13 @@ public class MemberJudgeRequestDto {
     return programmingAbility;
   }
 
+
   public int getinfrastructureKnowledge() {
     return infrastructureKnowledge;
+  }
+
+  public void setmemberName(String memberName) {
+    this.memberName = memberName;
   }
 
   public void seteventPlanning(int eventPlanning) {

@@ -3,18 +3,14 @@ package jp.co.netprotections.service.impl;
 import jp.co.netprotections.dto.MemberJudgeRequestDto;
 
 public class MemberJudgeServiceImpl {
-  public boolean judgeLogic() {
-    MemberJudgeRequestDto dto = new MemberJudgeRequestDto();
-    dto.seteventPlanning(5);
-    dto.setcoodination(5);
-    dto.setcogitation(5);
-    dto.setprogrammingAbility(5);
-    dto.setinfrastructureKnowledge(5);
-    if(dto.geteventPlanning() >= 2
+
+  public boolean judgeLogic(MemberJudgeRequestDto dto) {
+
+    if(dto.geteventPlanning() > 1
         &&
-        dto.getcoodination() >= 2
+        dto.getcoodination() > 1
         &&
-        sum(dto) >= 11
+        sum(dto) > 10
     ) {
       return true;
     } else {
@@ -23,7 +19,8 @@ public class MemberJudgeServiceImpl {
   }
 
   public int sum(MemberJudgeRequestDto sum) {
-    return sum.geteventPlanning()
+    return
+    sum.geteventPlanning()
       +
     sum.getcoodination()
       +
