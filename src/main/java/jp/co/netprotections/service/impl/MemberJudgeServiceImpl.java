@@ -1,14 +1,32 @@
 package jp.co.netprotections.service.impl;
 
-import jp.co.netprotections.dto.MemberJudgeRequestDto;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-public class MemberJudgeServiceImpl {
+import jp.co.netprotections.dto.MemberJudgeRequestDto;
+import jp.co.netprotections.dto.MemberJudgeResponseDto;
+import jp.co.netprotections.service.MemberJudgeService;
+
+@Service
+public class MemberJudgeServiceImpl implements MemberJudgeService {
+
+  @ResponseBody
+  public MemberJudgeResponseDto execute(MemberJudgeRequestDto dto) {
+    MemberJudgeResponseDto judge = new MemberJudgeResponseDto();
+    judge.setmemberName(dto.getMemberName());
+    judge.setenlistedPropriety(judgeLogic(dto));
+
+    return judge;
+  }
+
+
+
 
   public boolean judgeLogic(MemberJudgeRequestDto dto) {
 
-    if(dto.geteventPlanning() > 1
+    if(dto.getEventPlanning() > 1
         &&
-        dto.getcoodination() > 1
+        dto.getCoodination() > 1
         &&
         sum(dto) > 10
     ) {
@@ -20,15 +38,15 @@ public class MemberJudgeServiceImpl {
 
   public int sum(MemberJudgeRequestDto sum) {
     return
-    sum.geteventPlanning()
+    sum.getEventPlanning()
       +
-    sum.getcoodination()
+    sum.getCoodination()
       +
-    sum.getcogitation()
+    sum.getCogitation()
       +
-    sum.getprogrammingAbility()
+    sum.getProgrammingAbility()
       +
-    sum.getinfrastructureKnowledge();
+    sum.getInfrastructureKnowledge();
   }
 
 }

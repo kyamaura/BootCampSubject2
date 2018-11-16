@@ -16,11 +16,11 @@ public class MemeberJudgeServiceTest {
   @Test
   public void testImpl001() {
     MemberJudgeRequestDto dto = new MemberJudgeRequestDto();
-    dto.seteventPlanning(5);
-    dto.setcoodination(5);
-    dto.setcogitation(5);
-    dto.setprogrammingAbility(5);
-    dto.setinfrastructureKnowledge(5);
+    dto.setEventPlanning(5);
+    dto.setCoodination(5);
+    dto.setCogitation(5);
+    dto.setProgrammingAbility(5);
+    dto.setInfrastructureKnowledge(5);
     MemberJudgeServiceImpl first = new MemberJudgeServiceImpl();
     boolean result = first.judgeLogic(dto);
     assertThat(result, is(true));
@@ -29,11 +29,11 @@ public class MemeberJudgeServiceTest {
   @Test
   public void testImpl002() {
     MemberJudgeRequestDto dto = new MemberJudgeRequestDto();
-    dto.seteventPlanning(1);
-    dto.setcoodination(5);
-    dto.setcogitation(5);
-    dto.setprogrammingAbility(5);
-    dto.setinfrastructureKnowledge(5);
+    dto.setEventPlanning(1);
+    dto.setCoodination(5);
+    dto.setCogitation(5);
+    dto.setProgrammingAbility(5);
+    dto.setInfrastructureKnowledge(5);
     MemberJudgeServiceImpl second = new MemberJudgeServiceImpl();
     boolean result = second.judgeLogic(dto);
     assertThat(result, is(false));
@@ -42,13 +42,13 @@ public class MemeberJudgeServiceTest {
   @Test
   public void testService001() {
     MemberJudgeRequestDto dto = new MemberJudgeRequestDto();
-    dto.setmemberName("nozaki");
-    dto.seteventPlanning(2);
-    dto.setcogitation(3);
-    dto.setcoodination(2);
-    dto.setprogrammingAbility(2);
-    dto.setinfrastructureKnowledge(2);
-    MemberJudgeService third = new MemberJudgeService();
+    dto.setMemberName("nozaki");
+    dto.setEventPlanning(2);
+    dto.setCogitation(3);
+    dto.setCoodination(2);
+    dto.setProgrammingAbility(2);
+    dto.setInfrastructureKnowledge(2);
+    MemberJudgeServiceImpl third = new MemberJudgeServiceImpl();
     MemberJudgeResponseDto result =  third.execute(dto);
     assertThat(result.getmemberName(), is("nozaki"));
     assertThat(result.getenlistedPropriety(), is(true));
