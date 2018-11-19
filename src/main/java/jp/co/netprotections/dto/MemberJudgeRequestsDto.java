@@ -19,6 +19,10 @@ public class MemberJudgeRequestsDto {
     this.memberCandidatesList = memberCandidatesList;
   }
 
+  /**
+   * for拡張文のテストコードです.
+   * @return
+   */
   public String toStrings() {
     String str = "";
     for (MemberJudgeRequestDto memberCandidate : this.memberCandidatesList) {

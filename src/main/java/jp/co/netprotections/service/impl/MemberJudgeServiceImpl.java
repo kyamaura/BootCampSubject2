@@ -10,6 +10,9 @@ import jp.co.netprotections.service.MemberJudgeService;
 @Service
 public class MemberJudgeServiceImpl implements MemberJudgeService {
 
+  /**
+   * 受け取ったリクエストDTOをもとに、適正ロジックを実行します.
+   */
   @ResponseBody
   public MemberJudgeResponseDto execute(MemberJudgeRequestDto dto) {
     MemberJudgeResponseDto judge = new MemberJudgeResponseDto();
@@ -19,12 +22,13 @@ public class MemberJudgeServiceImpl implements MemberJudgeService {
     return judge;
   }
 
-
-
-
+  /**
+   * 入隊可否の判定ロジックです.
+   * @return
+   */
   public boolean judgeLogic(MemberJudgeRequestDto dto) {
 
-    if(dto.getEventPlanning() > 1
+    if (dto.getEventPlanning() > 1
         &&
         dto.getCoodination() > 1
         &&
@@ -36,6 +40,10 @@ public class MemberJudgeServiceImpl implements MemberJudgeService {
     }
   }
 
+  /**
+   * 入隊可否ロジックで使用する数値の合計メソッドです.
+   * @return
+   */
   public int sum(MemberJudgeRequestDto sum) {
     return
     sum.getEventPlanning()

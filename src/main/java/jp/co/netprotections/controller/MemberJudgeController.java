@@ -1,6 +1,8 @@
 package jp.co.netprotections.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,7 @@ import jp.co.netprotections.dto.MemberJudgeRequestsDto;
 import jp.co.netprotections.dto.MemberJudgeResponseDto;
 import jp.co.netprotections.dto.MemberJudgeResponsesDto;
 import jp.co.netprotections.service.impl.MemberJudgeServiceImpl;
+import jp.co.netprotections.service.impl.NewComp2;
 
 @RestController
 public class MemberJudgeController {
@@ -21,41 +24,52 @@ public class MemberJudgeController {
   @Autowired
   MemberJudgeServiceImpl memberJudgeServiceImpl;
 
+  /**
+   * validation処理後、ソートをかけてリスポンスを返します.
+   */
   @RequestMapping(
       value = "/subject2",
       method = RequestMethod.POST,
       consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE
     )
-  public MemberJudgeResponseDto execute(@RequestBody MemberJudgeRequestDto dto) {
-    if(dto.getEventPlanning() > 5
-        ||
-        dto.getCoodination() > 5
-        ||
-        dto.getCogitation() > 5
-        ||
-        dto.getProgrammingAbility() > 5
-        ||
-        dto.getInfrastructureKnowledge() > 5
-        ||
-        dto.getEventPlanning() < 0
-        ||
-        dto.getCoodination() < 0
-        ||
-        dto.getCogitation() < 0
-        ||
-        dto.getProgrammingAbility() < 0
-        ||
-        dto.getInfrastructureKnowledge() < 0
-    ) {
-      MemberJudgeResponseDto memberJudgeResponseDto = new MemberJudgeResponseDto();
-      return memberJudgeResponseDto;
-    } else {
-      MemberJudgeResponseDto result = memberJudgeServiceImpl.execute(dto);
-      return result;
+  public MemberJudgeResponsesDto execute(@RequestBody MemberJudgeRequestsDto dtos) {
+    List<MemberJudgeResponseDto> list = new ArrayList<MemberJudgeResponseDto>();
+    for (MemberJudgeRequestDto member : dtos.getMemberCandidatesList()) {
+      if (
+          member.getEventPlanning() <= 5
+          &&
+          member.getCoodination() <= 5
+          &&
+          member.getCogitation() <= 5
+          &&
+          member.getProgrammingAbility() <= 5
+          &&
+          member.getInfrastructureKnowledge() <= 5
+          &&
+          member.getEventPlanning() >= 0
+          &&
+          member.getCoodination() >= 0
+          &&
+          member.getCogitation() >= 0
+          &&
+          member.getProgrammingAbility() >= 0
+          &&
+          member.getInfrastructureKnowledge() >= 0
+      ) {
+        MemberJudgeResponseDto result = memberJudgeServiceImpl.execute(member);
+        list.add(result);
+      }
     }
+    Collections.sort(list, new NewComp2());
 
+    MemberJudgeResponsesDto results = new MemberJudgeResponsesDto();
+    results.setJudgedCandidatesResultList(list);
+    return results;
   }
 
+  /**
+   *【テスト】２つのリクエストに対して、レスポンスします.
+   */
   @RequestMapping(
         value = "/subject3",
         method = RequestMethod.POST,
@@ -63,7 +77,6 @@ public class MemberJudgeController {
      )
   @ResponseBody
   public MemberJudgeResponsesDto execute1(@RequestBody MemberJudgeRequestsDto dtos) {
-    System.out.println(dtos.getMemberCandidatesList());
     MemberJudgeResponseDto result1 =
         memberJudgeServiceImpl.execute(dtos.getMemberCandidatesList().get(0));
     MemberJudgeResponseDto result2 =
@@ -71,24 +84,30 @@ public class MemberJudgeController {
     ArrayList<MemberJudgeResponseDto> list = new ArrayList<MemberJudgeResponseDto>();
     list.add(0, result1);
     list.add(1, result2);
-    System.out.println(list);
     MemberJudgeResponsesDto results = new MemberJudgeResponsesDto();
     results.setJudgedCandidatesResultList(list);
     return results;
   }
 
 
-
+  /**
+   *【テスト】 for拡張文で、複数のリクエストに対して、レスポンスします.
+   */
   @RequestMapping(
       value = "/subject4",
       method = RequestMethod.POST,
       consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE
       )
   @ResponseBody
-  public MemberJudgeResponsesDto executess(@RequestBody MemberJudgeRequestsDto dto) {
-    MemberJudgeResponsesDto test = new MemberJudgeResponsesDto();
-    System.out.println(test.getJudgedCandidatesResultList());
-    return test;
+  public MemberJudgeResponsesDto execute2(@RequestBody MemberJudgeRequestsDto dtos) {
+    ArrayList<MemberJudgeResponseDto> list = new ArrayList<MemberJudgeResponseDto>();
+    for (MemberJudgeRequestDto member : dtos.getMemberCandidatesList()) {
+      MemberJudgeResponseDto result = memberJudgeServiceImpl.execute(member);
+      list.add(result);
+    }
+    MemberJudgeResponsesDto results = new MemberJudgeResponsesDto();
+    results.setJudgedCandidatesResultList(list);
+    return results;
   }
 
 }

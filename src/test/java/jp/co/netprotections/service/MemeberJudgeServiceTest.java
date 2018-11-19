@@ -10,6 +10,7 @@ import org.junit.runners.JUnit4;
 import jp.co.netprotections.dto.MemberJudgeRequestDto;
 import jp.co.netprotections.dto.MemberJudgeResponseDto;
 import jp.co.netprotections.service.impl.MemberJudgeServiceImpl;
+
 @RunWith(JUnit4.class)
 public class MemeberJudgeServiceTest {
 

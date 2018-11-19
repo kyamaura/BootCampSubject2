@@ -1,5 +1,9 @@
 package jp.co.netprotections.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class MemberJudgeRequestDto {
 
   private String memberName;
@@ -21,6 +25,10 @@ public class MemberJudgeRequestDto {
     return cogitation;
   }
 
+
+  @NotNull
+  @Min(0)
+  @Max(5)
   public int getCoodination() {
     return coodination;
   }
